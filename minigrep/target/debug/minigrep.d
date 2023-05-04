@@ -1,0 +1,1 @@
+/Users/akha/Documents/bazarbekovic.jana.at/rust_projects/minigrep/target/debug/minigrep: /Users/akha/Documents/bazarbekovic.jana.at/rust_projects/minigrep/src/lib.rs /Users/akha/Documents/bazarbekovic.jana.at/rust_projects/minigrep/src/main.rs

@@ -1,0 +1,46 @@
+convert t between fahrenheit and celcius
+gen the nth fibonacci
+print lyrics of fav repetited song
+
+[dependencies]
+reqwest = ""
+serde = "1.0"
+serde_json = "1.0"
+
+code:
+
+#[derive(Deserialize, Debug)]
+struct StockData{
+	symbol: String
+	price:f64
+}
+
+use reqwest::Client;
+use serde::Deserialize;
+use serde::json::from_str;
+
+async fn get_stock_data(symbol: &str) -> Result<StockData, reqwest::Error> {
+	let  client = Client::new();
+	let url = format!("https://finance.yahoo.com/quote{}",symbol);
+	let res = client.get(&url).send().await;
+	let txt = res.text().await?;
+
+	let start = text.find("root.App.main").unwrap();
+	let end = text.find("this").unwrap();
+	let text = &text[start..end];
+	let start = text.find("{\"context\":").unwrap;
+	let end = text.rfind("}").unwrap();
+	let text = &text[start..=end];
+
+	let stock_data: StockData = from_str(text)?;
+	Ok(stock_data);
+}
+
+use std::env;
+
+async fn main() -> Result<(), reqwest::Error> {
+	let symbol = env::args().nth(1).unwrap_or("AAPL".to_string());
+	let data = get_stock_data(&symbol).await?;
+	println!("{:?}",data);
+	Ok(());
+}
